@@ -11,11 +11,11 @@ namespace HorizonEvents.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EventosController : ControllerBase
+    public class EventsController : ControllerBase
     {
         private readonly IEventService eventService;
 
-        public EventosController(IEventService eventService)
+        public EventsController(IEventService eventService)
         {
             this.eventService = eventService;
         }
