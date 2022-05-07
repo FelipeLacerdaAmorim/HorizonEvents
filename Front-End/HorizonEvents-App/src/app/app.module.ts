@@ -18,15 +18,20 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { EventsComponent } from './components/events-comp/events.component';
 import { SpeakerComponent } from './components/speaker-comp/speaker.component';
-import { NavComponent } from './nav-comp/nav.component';
+import { NavComponent } from './shared/nav-comp/nav.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 import { TitleComponent } from './shared/title/title.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { EventDetailComponent } from './components/events-comp/event-detail/event-detail.component';
+import { EventListComponent } from './components/events-comp/event-list/event-list.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,12 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     TitleComponent,
     ContactsComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    EventDetailComponent,
+    EventListComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent
    ],
   imports: [
     BrowserModule,
