@@ -3,7 +3,7 @@
 Event menagement application build with .NET 5 and Angular 13. 
 
 ## Back-end
-First thing you need to do is download .NET 5 sdk on the Microsoft website. Than, in the HorizonEvents.API folder, run:
+First thing you need to do is download .NET 5 sdk (Microsoft website). Than, in the HorizonEvents.API folder, run:
 
 `dotnet build`
 
