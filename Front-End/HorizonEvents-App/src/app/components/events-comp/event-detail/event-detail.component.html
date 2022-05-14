@@ -1,44 +1,89 @@
 <div class="card rounded shadow-sm">
-  <form>
+  <form [formGroup]="form">
     <div class="p-3">
       <div class="form-row">
         <div class="form-group col-md-12">
           <label>Theme</label>
-          <input type="text" class="form-control" placeholder="Insert the theme">
+          <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': f.theme.errors && f.theme.touched}"
+          formControlName="theme" placeholder="Insert the theme">
+          <div *ngIf="f.theme.errors?.required" class="invalid-feedback">
+            Theme is required
+          </div>
+          <div *ngIf="f.theme.errors?.minlength" class="invalid-feedback">
+            Minimum 4 characters required
+          </div>
+          <div *ngIf="f.theme.errors?.maxlength" class="invalid-feedback">
+            Maximum characters exceeded (50)
+          </div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-8">
           <label>Local</label>
-          <input type="text" class="form-control" placeholder="">
+          <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': f.local.errors && f.local.touched}"
+          formControlName="local" placeholder="">
+          <div class="invalid-feedback">
+            Local is required
+          </div>
         </div>
         <div class="form-group col-md-4">
-          <label>Date and hour</label>
-          <input type="datetime" class="form-control" placeholder="">
+          <label>Date and Hour</label>
+          <input type="datetime" class="form-control"
+          [ngClass]="{'is-invalid': f.eventDate.errors && f.eventDate.touched}"
+          formControlName="eventDate" placeholder="">
+          <div class="invalid-feedback">Date and Hour are required</div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-2">
           <label>Amount of people</label>
-          <input type="text" class="form-control" placeholder="">
+          <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': f.numPeople.errors && f.numPeople.touched}"
+          formControlName="numPeople" placeholder="">
+          <div *ngIf="f.numPeople.errors?.required" class="invalid-feedback">
+            Amount of People is required
+          </div>
+          <div *ngIf="f.numPeople.errors?.max" class="invalid-feedback">
+            Amount of People cannot be more than 120000
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <label>Telephone</label>
+          <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': f.telephone.errors && f.telephone.touched}"
+          formControlName="telephone" placeholder="(000) 90000-0000">
+          <div class="invalid-feedback">Telephone is required</div>
         </div>
         <div class="form-group col-md-4">
-          <label>Telephone</label>
-          <input type="text" class="form-control" placeholder="(000) 90000-0000">
-        </div>
-        <div class="form-group col-md-6">
           <label>Email</label>
-          <input type="text" class="form-control" placeholder="e-mail">
+          <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': f.email.errors && f.email.touched}"
+          formControlName="email" placeholder="e-mail">
+          <div *ngIf="f.email.errors?.required" class="invalid-feedback">
+            Email is required
+          </div>
+          <div *ngIf="f.email.errors?.email" class="invalid-feedback">
+            It must be a valid Email
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label>Image</label>
+          <input type="text" class="form-control"
+          [ngClass]="{'is-invalid': f.imageURL.errors && f.imageURL.touched}"
+          formControlName="imageURL" placeholder="Event image">
+          <div class="invalid-feedback">Image is required</div>
         </div>
       </div>
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-secondary mr-auto border">
+        <button class="btn btn-outline-secondary mr-auto border" (click)="resetForm()">
           Cancel Changes
         </button>
-        <button class="btn btn-success">
-          <span class="spinner-border spinner-border-sm mr-1"></span>
+        <button class="btn btn-success" [disabled]="!form.valid">
+          <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
           Save Event
         </button>
       </div>

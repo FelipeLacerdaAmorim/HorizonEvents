@@ -25,7 +25,7 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { TitleComponent } from './shared/title/title.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { EventDetailComponent } from './components/events-comp/event-detail/event-detail.component';
 import { EventListComponent } from './components/events-comp/event-list/event-list.component';
@@ -57,6 +57,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     FormsModule,
+    ReactiveFormsModule,
     TooltipModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),

@@ -1,6 +1,6 @@
 <app-title [title]="'Perfil'"></app-title>
 <div class="card rounded shadow-sm p-3">
-  <form>
+  <form [formGroup]="formProfile">
     <div class="row p-3">
       <div class="col-lg-3 pt-1">
         <div class="card mb-3">
@@ -38,6 +38,7 @@
         </div>
       </div>
       <div class="col-lg-9">
+
         <div class="form-row">
           <div class="form-group col-12">
             <h3 class="border-bottom">Profile Details</h3>
@@ -58,24 +59,43 @@
           </div>
           <div class="form-group col-sm-5">
             <label>First Name</label>
-            <input type="text" class="form-control"/>
+            <input type="text" class="form-control"
+            [ngClass]="{'is-invalid': fp.firstname.errors && fp.firstname.touched}"
+            formControlName="firstname"/>
+            <div class="invalid-feedback">
+              Firstname is required
+            </div>
 
           </div>
           <div class="form-group col-sm-5">
             <label>Last Name</label>
-            <input type="text" class="form-control"/>
-
+            <input type="text" class="form-control"
+            [ngClass]="{'is-invalid': fp.lastname.errors && fp.lastname.touched}"
+            formControlName="lastname"/>
+            <div class="invalid-feedback">
+              Lastname is required
+            </div>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-sm-5">
             <label>E-mail</label>
-            <input type="text" class="form-control" />
+            <input type="text" class="form-control"
+            [ngClass]="{'is-invalid': fp.email.errors && fp.email.touched}"
+            formControlName="email"/>
+            <div *ngIf="fp.email.errors?.required" class="invalid-feedback">
+              Email is required
+            </div>
+            <div *ngIf="fp.email.errors?.email" class="invalid-feedback">
+              new Email must be valid
+            </div>
           </div>
+
           <div class="form-group col-sm-4">
             <label>Telephone</label>
             <input type="text" class="form-control" />
           </div>
+
           <div class="form-group col-sm">
             <label>Function</label>
             <select class="form-control">
@@ -96,22 +116,38 @@
         <div class="form-row">
           <div class="form-group col-sm">
             <label>Password</label>
-            <input type="password" class="form-control" />
+            <input type="password" formControlName="password"
+            [ngClass]="{'is-invalid': fp.password.errors && fp.password.touched}"
+            class="form-control" />
+            <div *ngIf="fp.password.errors?.required" class="invalid-feedback">
+              Password is required
+            </div>
+            <div *ngIf="fp.password.errors?.minlength" class="invalid-feedback">
+              Minimum 6 characters required
+            </div>
           </div>
           <div class="form-group col-sm">
             <label>Confirm Password</label>
-            <input type="password" class="form-control" />
+            <input type="password" formControlName="passwordconfirm"
+            [ngClass]="{'is-invalid': fp.passwordconfirm.errors && fp.passwordconfirm.touched}"
+            class="form-control" />
+            <div *ngIf="fp.passwordconfirm.errors?.required" class="invalid-feedback">
+              Must confirm your password
+            </div>
+            <div *ngIf="fp.passwordconfirm.errors?.mustMatch" class="invalid-feedback">
+              The passwords must match
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="card-footer">
       <div class="d-flex">
-        <button class="btn btn-outline-secondary mr-auto border">
+        <button (click)="resetForm($event)" class="btn btn-outline-secondary mr-auto border" >
           Cancel Changes
         </button>
         <button class="btn btn-success">
-          <span class="spinner-border spinner-border-sm mr-1"></span>
+          <!--<span class="spinner-border spinner-border-sm mr-1"></span>-->
           Save Changes
         </button>
       </div>
