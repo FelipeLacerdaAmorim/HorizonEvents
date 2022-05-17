@@ -17,6 +17,7 @@ using HorizonEvents.Persistence.Context;
 using HorizonEvents.Application;
 using HorizonEvents.Application.Interfaces;
 using HorizonEvents.Persistence.Interfaces;
+using AutoMapper;
 
 namespace HorizonEvents.API
 {
@@ -39,6 +40,9 @@ namespace HorizonEvents.API
                     .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IGeneralPersist, GeneralPersist>();
             services.AddScoped<IEventPersist, EventPersist>();

@@ -1,16 +1,16 @@
 using System.Threading.Tasks;
-using HorizonEvents.Domain;
+using HorizonEvents.Application.Dtos;
 
 namespace HorizonEvents.Application.Interfaces
 {
     public interface IEventService
     {
-        Task<Event> AddEvent(Event model);
-        Task<Event> UpdateEvent(int eventId, Event model);
+        Task<EventDto> AddEvent(EventDto model);
+        Task<EventDto> UpdateEvent(int eventId, EventDto model);
         Task<bool> DeleteEvent(int eventId);
 
-        Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers);
-        Task<Event[]> GetAllEventsAsync(bool includeSpeakers);
-        Task<Event> GetEventByIdAsync(int eventId, bool includeSpeakers);
+        Task<EventDto[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers);
+        Task<EventDto[]> GetAllEventsAsync(bool includeSpeakers);
+        Task<EventDto> GetEventByIdAsync(int eventId, bool includeSpeakers);
     }
 }

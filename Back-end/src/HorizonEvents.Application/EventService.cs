@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using HorizonEvents.Application.Dtos;
 using HorizonEvents.Application.Interfaces;
 using HorizonEvents.Domain;
 using HorizonEvents.Persistence.Interfaces;
@@ -11,20 +14,29 @@ namespace HorizonEvents.Application
         private readonly IEventPersist _eventPersist;
         private readonly IGeneralPersist _generalPersist;
 
-        public EventService(IEventPersist eventPersist, IGeneralPersist generalPersist)
+        private readonly IMapper _mapper;
+
+        public EventService(IEventPersist eventPersist, 
+                            IGeneralPersist generalPersist,
+                            IMapper mapper)
         {
             _generalPersist = generalPersist;
             _eventPersist = eventPersist;
+            _mapper = mapper;
         }
 
-        public async Task<Event> AddEvent(Event model)
+        public async Task<EventDto> AddEvent(EventDto model)
         {
             try
             {
-                _generalPersist.Add<Event>(model);
+                var _event = _mapper.Map<Event>(model);
+
+                _generalPersist.Add<Event>(_event);
+
                 if(await _generalPersist.SaveChangesAsync())
                 {
-                    return await _eventPersist.GetEventByIdAsync(model.Id, false);
+                    var result = await _eventPersist.GetEventByIdAsync(_event.Id, false);
+                    return _mapper.Map<EventDto>(result);
                 }
                 return null;
             }
@@ -34,7 +46,7 @@ namespace HorizonEvents.Application
             }
         }
 
-        public async Task<Event> UpdateEvent(int eventId, Event model)
+        public async Task<EventDto> UpdateEvent(int eventId, EventDto model)
         {
             try
             {
@@ -47,10 +59,14 @@ namespace HorizonEvents.Application
 
                 model.Id = _event.Id;
 
-                _generalPersist.Update<Event>(model);
+                _mapper.Map(model, _event);
+
+                _generalPersist.Update<Event>(_event);
+                
                 if(await _generalPersist.SaveChangesAsync())
                 {
-                    return await _eventPersist.GetEventByIdAsync(model.Id, false);
+                    var result = await _eventPersist.GetEventByIdAsync(model.Id, false);
+                    return _mapper.Map<EventDto>(result);
                 }
                 return null;
             }
@@ -81,7 +97,7 @@ namespace HorizonEvents.Application
         }
 
 
-        public async Task<Event[]> GetAllEventsAsync(bool includeSpeakers)
+        public async Task<EventDto[]> GetAllEventsAsync(bool includeSpeakers)
         {
             try{
                 var _events = await _eventPersist.GetAllEventsAsync(includeSpeakers);
@@ -89,15 +105,19 @@ namespace HorizonEvents.Application
                 {
                     return null;
                 }
-                return _events;
+
+                var results = _mapper.Map<EventDto[]>(_events);
+
+                return results;
             }
+
             catch(Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
 
-        public async Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers)
+        public async Task<EventDto[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers)
         {
 
             try{
@@ -106,7 +126,10 @@ namespace HorizonEvents.Application
                 {
                     return null;
                 }
-                return _events;
+                
+                var results = _mapper.Map<EventDto[]>(_events);
+
+                return results;
             }
             catch(Exception ex)
             {
@@ -114,7 +137,7 @@ namespace HorizonEvents.Application
             }
         }
 
-        public async Task<Event> GetEventByIdAsync(int eventId, bool includeSpeakers)
+        public async Task<EventDto> GetEventByIdAsync(int eventId, bool includeSpeakers)
         {
 
             try{
@@ -123,7 +146,10 @@ namespace HorizonEvents.Application
                 {
                     return null;
                 }
-                return _event;
+
+                var result = _mapper.Map<EventDto>(_event);
+
+                return result;
             }
             catch(Exception ex)
             {

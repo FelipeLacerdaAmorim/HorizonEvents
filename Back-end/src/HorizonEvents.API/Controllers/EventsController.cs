@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using HorizonEvents.Domain;
 using HorizonEvents.Application.Interfaces;
 using Microsoft.AspNetCore.Http;
+using HorizonEvents.Application.Dtos;
 
 namespace HorizonEvents.API.Controllers
 {
@@ -28,8 +29,9 @@ namespace HorizonEvents.API.Controllers
                 var _events = await eventService.GetAllEventsAsync(true);
                 if(_events == null)
                 {
-                    return NotFound("Events not found");
+                    return NoContent();
                 }
+
                 return Ok(_events);
             }
             catch (Exception ex)
@@ -47,7 +49,7 @@ namespace HorizonEvents.API.Controllers
                 var _event = await eventService.GetEventByIdAsync(id, true);
                 if(_event == null)
                 {
-                    return NotFound("Event not found");
+                    return NoContent();;
                 }
                 return Ok(_event);
             }
@@ -66,7 +68,7 @@ namespace HorizonEvents.API.Controllers
                 var _events = await eventService.GetAllEventsByThemeAsync(theme, true);
                 if(_events == null)
                 {
-                    return NotFound("Events not found");
+                    return NoContent();
                 }
                 return Ok(_events);
             }
@@ -78,7 +80,7 @@ namespace HorizonEvents.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Event model)
+        public async Task<IActionResult> Post(EventDto model)
         {
             try
             {
@@ -97,7 +99,7 @@ namespace HorizonEvents.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Event model)
+        public async Task<IActionResult> Put(int id, EventDto model)
         {
             try
             {

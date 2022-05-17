@@ -498,3 +498,4 @@ Thumbs.db
 *.db-wal
 
 *dist
+*.vscode
